@@ -5,7 +5,7 @@ import bot
 
 def main():
     # Establecemos una conexión entre nuestro programa y el bot.
-    updater = Updater(TOKEN, use_context=True)  # Insertemos el Token del bot.
+    updater = Updater("TOKEN", use_context=True)  # Insertemos el Token del bot.
     dp = updater.dispatcher
 
     # Establecer los comandos que ejecutará el bot.
@@ -18,7 +18,7 @@ def main():
     dp.add_handler(CommandHandler("doc", bot.documento))
     dp.add_handler(CommandHandler("img", bot.image))
     dp.add_handler(CommandHandler("grafo", bot.grafo))
-    dp.add_handler(CommandHandler("sec", bot.secuencia))
+    dp.add_handler(CommandHandler("sec", bot.secuencia_prime))
     dp.add_handler(CommandHandler("fibonacci", bot.fibonacci))
 
     # Iniciamos el bot.

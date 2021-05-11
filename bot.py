@@ -1,4 +1,7 @@
 import logging
+import networkx as nx
+import random
+import matplotlib.pyplot as plt
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 logging.basicConfig(level=logging.INFO,
@@ -14,9 +17,9 @@ def start(update, context):
 
 def ayuda(update, context):
     opciones = [[InlineKeyboardButton("Punto 1", callback_data="op1")],
-                [InlineKeyboardButton("Punto 2", callback_data="op2")],
+                [InlineKeyboardButton("secuencia", callback_data="op2")],
                 [InlineKeyboardButton("Fibonacci", callback_data="op3")],
-                [InlineKeyboardButton("Punto 4", callback_data="op4")]]
+                [InlineKeyboardButton("Grafos", callback_data="op4")]]
     reply_markup = InlineKeyboardMarkup(opciones)
     name = update.message.chat["first_name"]
     logger.info(f"El usuario {name} ha solicitado ayuda.")
@@ -66,21 +69,31 @@ def grafo(update, context):
         graph = eval(text)
         vertices = int(graph[0])
         aristas = int(graph[1])
+        k = int(graph[2])
         update.message.reply_text(f"La cantidad de vértices son: {vertices}")
         update.message.reply_text(f"La cantidad de aristas son: {aristas}")
+        update.message.reply_text(f"k es: {k}")
+        dibujar_grafo(vertices, aristas, k)
+        chat_id = update.message.chat_id
+        context.bot.send_photo(chat_id=chat_id, photo=open('foo.png', 'rb'))
     except Exception as e:
-        logger.info("Ha ocurrido un error en los parámetros.")
+        logger.exception("Ha ocurrido un error en los parámetros.")
         update.message.reply_text("Por favor, digite los parámetros nuevamente.")
 
 
-def secuencia(update, context):
+def secuencia_prime(update, context):
     text = update.message.text
     text = text.replace("/sec ", "").strip()
-    try:
-        secuencia = eval(text)
-        for item in secuencia:
-            item = int(item)
-            update.message.reply_text(item)
+    update.message.reply_text(f"Usted ha escrito: \n{text}")
+    try:       
+        RR = eval(text)
+        update.message.reply_text(f"Digite las condiciones inciales")
+        text = update.message.text
+        ci = eval(text)
+        update.message.reply_text(f"Digita i0:")
+        text = update.message.text
+        i0 = eval(text)
+        update.message.reply_text(f"f(n) ={solucionar_RR(RR,ci,i0)}")
     except Exception as e:
         logger.info("Ha ocurrido un error en los parámetros.")
         update.message.reply_text("Por favor, digite los parámetros nuevamente.")
@@ -145,6 +158,61 @@ posiblesListas = []
 encontrarFib(lista)
 # END FIBONACCI
 
+# GRAFO
+def dibujar_grafo(V, E, K):
+  if E>(V/2)*K or E>(V/2)*(V-1):
+    print("Ese E está malo, salu2")
+    return
+
+  print("aqui ando")
+  G = nx.Graph()
+  A = []
+  edges = []
+
+  #Crear los nodos
+  for i in range(0,V):
+    G.add_node(i)
+    A.append(0)
+
+  for i in range(0,E):
+    while True:
+      nodo1 = random.randint(0, V-1)
+      nodo2 = random.randint(0, V-1)
+      if nodo1!=nodo2 and A[nodo1]<K and A[nodo2]<K :
+        if(nodo1,nodo2) not in edges and (nodo2,nodo1) not in edges:
+          A[nodo1]+=1
+          A[nodo2]+=1
+          edges.append((nodo1,nodo2))   
+          print(A)
+          break
+          
+  print(edges)
+  G.add_edges_from(edges)
+  nx.draw(G, with_labels=True, font_weight='bold')
+  plt.savefig('foo.png')
+# END GRAFO
+
+#SECUENCIA
+def solucionar_RR(RR, ci, i0):
+  R = np.roots(RR)
+  l = len(ci)
+  MR = np.zeros((l,len(R)))
+
+  for i in range(0, l):
+    k = 0
+    for j in R: 
+      MR[i,k] = j**(i0+i)
+      k+=1
+  b = np.linalg.lstsq(MR,ci,rcond=None )[0]
+  sol = ""
+  for i in range(0,len(b)):
+    if i!=0 :
+      sol = sol+" + "+str(round(b[i],5))+"*"+str(R[i])+"^n"
+    else:
+      sol = sol+str(round(b[i],5))+"*"+str(R[i])+"^n"
+
+  return sol
+#END SECUENCIA
 
 def menu(update, context):
     query = update.callback_query
