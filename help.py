@@ -18,7 +18,7 @@ def help(update,context):
 def menu(update, context):
   name = update.message.chat["first_name"]
   opciones = [[InlineKeyboardButton("Relación de recurrencia", callback_data="sec")],
-                [InlineKeyboardButton("Fibonacci", callback_data="fibonacci")],
+                [InlineKeyboardButton("Fibonacci", callback_data="fib")],
                 [InlineKeyboardButton("Generar grafo", callback_data="grafo")]]
   reply_markup = InlineKeyboardMarkup(opciones)
   text = f"Hola {name}, estos los comandos que puedo ejecutar:"

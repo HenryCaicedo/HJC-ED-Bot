@@ -2,21 +2,28 @@ from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, Conversa
 import help
 import graph
 import rr
+import fibonacci
 
 def main():
     # TOKEN CAMILO = 1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0
     # Establecemos una conexión entre nuestro programa y el bot.
-    updater = Updater("TOKEN", use_context=True)  # Insertemos el Token del bot.
+    updater = Updater("1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0", use_context=True)  # Insertemos el Token del bot.
     dp = updater.dispatcher
     
     # Establecer los comandos que ejecutará el bot.
     dp.add_handler(CommandHandler("start", help.start))
     dp.add_handler(CommandHandler("help", help.help))
 
-    dp.add_handler(CallbackQueryHandler(help.menu, pattern="RR"))
-    dp.add_handler(CallbackQueryHandler(help.menu, pattern="fibonacci"))
-
-    dp.add_handler(CommandHandler("fibonacci", help.fibonacci))
+    dp.add_handler(ConversationHandler(
+        entry_points=[
+            CommandHandler("fib", fibonacci.input_command_fibonacci),
+            CallbackQueryHandler(callback = fibonacci.input_callback_fibonacci, pattern="fib")
+        ],
+        states = {
+            fibonacci.INPUT_FIB: [MessageHandler(Filters.text, fibonacci.input_serie)],
+        },
+        fallbacks = [],
+    ))
 
     dp.add_handler(ConversationHandler(
         entry_points=[
