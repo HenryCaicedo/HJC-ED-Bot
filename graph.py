@@ -24,12 +24,18 @@ def input_aristas(update, context):
 def input_k(update, context):
     global k
     k = int(update.message.text)
-    dibujar_grafo(update, vertices, aristas, k)
-    chat_id = update.message.chat_id
-    filename = 'grafo.png'
-    context.bot.send_photo(chat_id=chat_id, photo=open(filename, 'rb'))
-    os.unlink(filename)
-    return ConversationHandler.END
+
+    if aristas > (vertices/2)*k or aristas > (vertices/2)*(vertices-1):
+        update.message.reply_text(f"El número de vertices ¡No es valido!, Comenzemos denuevo.")
+        update.message.reply_text(f"Digite el número de vertices: ")
+        return INPUT_VERTICES
+    else:
+        dibujar_grafo(vertices, aristas, k)
+        chat_id = update.message.chat_id
+        filename = 'grafo.png'
+        context.bot.send_photo(chat_id=chat_id, photo=open(filename, 'rb'))
+        os.unlink(filename)
+        return ConversationHandler.END
 
 
 def input_vertices(update, context):
@@ -49,11 +55,7 @@ def input_callback_grafo(update, context):
     return INPUT_VERTICES
 
 
-def dibujar_grafo(update, vertices, aristas, k):
-    if aristas > (vertices/2)*k or aristas > (vertices/2)*(vertices-1):
-        update.message.reply_text(f"El número de vertices ¡No es valido dado!")
-        return
-
+def dibujar_grafo( vertices, aristas, k):
     G = nx.Graph()
     A = []
     edges = []

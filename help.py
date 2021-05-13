@@ -7,26 +7,38 @@ logger = logging.getLogger(__name__)
 
 
 def start(update, context):
-  logger.info("Se ha iniciado el bot.")
-  name = update.message.chat["first_name"]
-  update.message.reply_text(f"¡Hola, {name} \U0001F44B!, un gusto tenerte por acá.")
-  menu(update, context)
+    logger.info("Se ha iniciado el bot.")
+    name = update.message.chat["first_name"]
+    update.message.reply_text(
+        f"¡Hola, {name} \U0001F44B!, un gusto tenerte por acá. \n Digita /help para obtener ayuda sobre el uso del bot.")
 
-def help(update,context):
-  menu(update,context)
+
+def help(update, context):
+    name = update.message.chat["first_name"]
+    text = f"Hola {name}, este bot posee tres funciones: "
+    rr = f"1. /rr, Esta función recibe los coeficientes de un polinomio característico de una relación de recurrencia y muestra cuál sería la forma de la solución."
+    examplerr = f"Ej.: f(n) = -1/2*f(n-1) + 1/2*f(n-2) con f_0 = 3 y f_1 = -3/2 \n Es digitado como: \n [1, 0.5,-0.5] \n casos base: \n [3,-1.5] \n El i sería:\n 0"
+    fib = f"Henry tu texto aca plox"
+    examplefib = f"Tu ejemplo aca henry plox pana"
+    grafo = f"3. /grafo, el usuario digita 3 números: El número de vértices V, número de aristas E y máximo de aristas por vértice K. EL bot crea un grafo simple no dirigido con V vértices, y E aristas asignadas aleatoriamente, de tal modo que ningún vértice tenga un grado mayor a K."
+    menut = f"4. /menu, Este comando le permite ejecutar los comandos anteriores a través de botones interactivos."
+    cancel = f"5. /cancel, Detiene el proceso que se este realizando."
+    update.message.reply_text(text)
+    update.message.reply_text(rr)
+    update.message.reply_text(examplerr)
+    update.message.reply_text(fib)
+    update.message.reply_text(examplefib)
+    update.message.reply_text(grafo)
+    update.message.reply_text(menut)
+    update.message.reply_text(cancel)
+    menu(update, context)
+
 
 def menu(update, context):
-  name = update.message.chat["first_name"]
-  opciones = [[InlineKeyboardButton("Relación de recurrencia", callback_data="sec")],
+    name = update.message.chat["first_name"]
+    opciones = [[InlineKeyboardButton("Relación de recurrencia", callback_data="rr")],
                 [InlineKeyboardButton("Fibonacci", callback_data="fib")],
                 [InlineKeyboardButton("Generar grafo", callback_data="grafo")]]
-  reply_markup = InlineKeyboardMarkup(opciones)
-  text = f"Hola {name}, estos los comandos que puedo ejecutar:"
-  update.message.reply_text(text, reply_markup=reply_markup)
-
-
-
-
-
-
-
+    reply_markup = InlineKeyboardMarkup(opciones)
+    text = f"Hola {name}, estos las funciones que puedo ejecutar:"
+    update.message.reply_text(text, reply_markup=reply_markup)

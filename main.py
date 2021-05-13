@@ -4,15 +4,20 @@ import graph
 import rr
 import fibonacci
 
+def cancel(update, context):
+    update.message.reply_text(f"El proceso se ha detenido")
+    return CommandHandler.END
+
 def main():
     # TOKEN CAMILO = 1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0
     # Establecemos una conexión entre nuestro programa y el bot.
-    updater = Updater("TOKEN", use_context=True)  # Insertemos el Token del bot.
+    updater = Updater("1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0", use_context=True)  # Insertemos el Token del bot.
     dp = updater.dispatcher
     
     # Establecer los comandos que ejecutará el bot.
     dp.add_handler(CommandHandler("start", help.start))
     dp.add_handler(CommandHandler("help", help.help))
+    dp.add_handler(CommandHandler("menu", help.menu))
 
     dp.add_handler(ConversationHandler(
         entry_points=[
@@ -22,20 +27,20 @@ def main():
         states = {
             fibonacci.INPUT_FIB: [MessageHandler(Filters.text, fibonacci.input_serie)],
         },
-        fallbacks = [],
+        fallbacks = [CommandHandler("cancel",cancel)],
     ))
 
     dp.add_handler(ConversationHandler(
         entry_points=[
-            CommandHandler("sec",rr.input_command_secuencia),
-            CallbackQueryHandler(callback = rr.input_callback_secuencia, pattern="sec")
+            CommandHandler("rr",rr.input_command_secuencia),
+            CallbackQueryHandler(callback = rr.input_callback_secuencia, pattern="rr")
         ],
         states = {
             rr.INPUT_LISTA: [MessageHandler(Filters.text, rr.input_polinomio)],
             rr.INPUT_CI: [MessageHandler(Filters.text, rr.input_ci)],
-            rr.INPUT_I: [MessageHandler(Filters.text, rr.input_i0)],
+            rr.INPUT_I: [MessageHandler(Filters.regex(r'^\d+$'), rr.input_i0)],
         },
-        fallbacks = [],
+        fallbacks = [CommandHandler("cancel",cancel)],
     ))
 
     dp.add_handler(ConversationHandler(
@@ -44,11 +49,11 @@ def main():
             CallbackQueryHandler(callback = graph.input_callback_grafo, pattern="grafo")
         ],
         states = {
-            graph.INPUT_VERTICES: [MessageHandler(Filters.text, graph.input_vertices)],
-            graph.INPUT_ARISTAS: [MessageHandler(Filters.text, graph.input_aristas)],
-            graph.INPUT_K: [MessageHandler(Filters.text, graph.input_k)],
+            graph.INPUT_VERTICES: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_vertices)],
+            graph.INPUT_ARISTAS: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_aristas)],
+            graph.INPUT_K: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_k)],
         },
-        fallbacks = [],
+        fallbacks = [CommandHandler("cancel",cancel)],
     ))
     
 
