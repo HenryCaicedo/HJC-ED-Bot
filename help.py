@@ -31,7 +31,6 @@ def help(update, context):
     update.message.reply_text(grafo)
     update.message.reply_text(menut)
     update.message.reply_text(cancel)
-    menu(update, context)
 
 
 def menu(update, context):
