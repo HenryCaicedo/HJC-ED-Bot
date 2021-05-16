@@ -26,7 +26,8 @@ def input_serie(update, context):
             update.message.reply_text('Lista: '+str(resultado))
         return ConversationHandler.END
     except (IndexError, ValueError):
-        update.message.reply_text('Se produjo un error al leer los datos. Recuerda ingresar números enteros ordenados de menor a mayor y separados por espacios.\n   Ej: 2 3 4 5 7 11 13 18 22 29')
+        update.message.reply_text('Se produjo un error al leer los datos. Recuerda ingresar números enteros ordenados de menor a mayor y separados por espacios.\n\nEj: 2 3 4 5 7 11 13 18 22 29')
+        update.message.reply_text('Intententemos de nuevo.\nDigite la serie de números, separados por espacios:')
 
 def escogerSecuencia(lista):
     largestLista = []
