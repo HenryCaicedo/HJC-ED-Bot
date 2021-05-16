@@ -11,7 +11,7 @@ def cancel(update, context):
 def main():
     # TOKEN CAMILO = 1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0
     # Establecemos una conexión entre nuestro programa y el bot.
-    updater = Updater("TOKEN", use_context=True)  # Insertemos el Token del bot.
+    updater = Updater("1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0", use_context=True)  # Insertemos el Token del bot.
     dp = updater.dispatcher
     
     # Establecer los comandos que ejecutará el bot.
@@ -36,9 +36,9 @@ def main():
             CallbackQueryHandler(callback = rr.input_callback_secuencia, pattern="rr")
         ],
         states = {
-            rr.INPUT_LISTA: [MessageHandler(Filters.text, rr.input_polinomio)],
-            rr.INPUT_CI: [MessageHandler(Filters.text, rr.input_ci)],
-            rr.INPUT_I: [MessageHandler(Filters.regex(r'^\d+$'), rr.input_i0)],
+            rr.INPUT_LISTA: [MessageHandler(Filters.text& ~Filters.command, rr.input_polinomio)],
+            rr.INPUT_CI: [MessageHandler(Filters.text& ~Filters.command, rr.input_ci)],
+            rr.INPUT_I: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, rr.input_i0)],
         },
         fallbacks = [CommandHandler("cancel",cancel)],
     ))
@@ -49,9 +49,9 @@ def main():
             CallbackQueryHandler(callback = graph.input_callback_grafo, pattern="grafo")
         ],
         states = {
-            graph.INPUT_VERTICES: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_vertices)],
-            graph.INPUT_ARISTAS: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_aristas)],
-            graph.INPUT_K: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_k)],
+            graph.INPUT_VERTICES: [MessageHandler(Filters.regex(r'^\d+$') & ~Filters.command, graph.input_vertices)],
+            graph.INPUT_ARISTAS: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, graph.input_aristas)],
+            graph.INPUT_K: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, graph.input_k)],
         },
         fallbacks = [CommandHandler("cancel",cancel)],
     ))

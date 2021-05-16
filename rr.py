@@ -33,7 +33,7 @@ def input_ci(update, context):
     global ci
     try:
         ci = eval(update.message.text)
-        if(ci.type is list):
+        if(type(ci) is list):
             sw = True
             for i in ci:
                 try:
@@ -58,7 +58,7 @@ def input_polinomio(update, context):
     global lista
     try:
         lista = eval(update.message.text)
-        if(lista.type is list):
+        if(type(lista) is list):
             sw = True
             for i in lista:
                 try:
@@ -73,7 +73,7 @@ def input_polinomio(update, context):
                 validar_poli(update, context)
         else:
             validar_poli(update, context)
-    except:
+    except Exception as e:
         validar_poli(update, context)
 
 
