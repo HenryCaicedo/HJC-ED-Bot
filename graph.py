@@ -26,7 +26,7 @@ def input_k(update, context):
     k = int(update.message.text)
 
     if aristas > (vertices/2)*k or aristas > (vertices/2)*(vertices-1):
-        update.message.reply_text(f"El número de vertices ¡No es valido!, Comenzemos denuevo.")
+        update.message.reply_text(f"El número de vertices no es valido. Comencemos de nuevo.")
         update.message.reply_text(f"Digite el número de vertices: ")
         return INPUT_VERTICES
     else:

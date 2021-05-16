@@ -1,17 +1,16 @@
 from telegram.ext.conversationhandler import ConversationHandler
 
-
 INPUT_FIB = 0
 lista = []
 posiblesListas = []
 
 def input_command_fibonacci(update, context):
-    update.message.reply_text(f"Digite la serie de números:")
+    update.message.reply_text(f"Digite la serie de números, separados por espacios:")
     return INPUT_FIB
 
 
 def input_callback_fibonacci(update, context):
-    update.callback_query.message.edit_text("Digite la serie de números:")
+    update.callback_query.message.edit_text("Digite la serie de números, separados por espacios:")
     return INPUT_FIB
 
 
@@ -21,17 +20,28 @@ def input_serie(update, context):
         serie = update.message.text
         lista = list(map(int, serie.strip().split()))[:len(serie.strip().split())]
         resultado = encontrar_fib(lista)
-        update.message.reply_text('Lista: '+str(resultado))
+        if len(resultado)<3:
+            update.message.reply_text('No se encontraron subsecuencias de Fibonacci en la secuencia ingresada.')
+        else:
+            update.message.reply_text('Lista: '+str(resultado))
         return ConversationHandler.END
     except (IndexError, ValueError):
-        update.message.reply_text('Por favor utiliza dos numeros')
+        update.message.reply_text('Se produjo un error al leer los datos. Recuerda ingresar números enteros ordenados de menor a mayor y separados por espacios.\n   Ej: 2 3 4 5 7 11 13 18 22 29')
+
+def escogerSecuencia(lista):
+    largestLista = []
+    for i in lista:
+        if len(i)>len(largestLista):
+            largestLista=i
+    return largestLista
 
 def encontrar_fib(lista):
     for index in range(0, len(lista)-2):
         global posiblesListas
         temp = secuencia(index)
         posiblesListas = posiblesListas + temp
-    return posiblesListas
+    resultado = escogerSecuencia(posiblesListas)
+    return resultado
 
 
 def ya_esta_en_la_lista(temp):
