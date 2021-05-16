@@ -10,8 +10,9 @@ def cancel(update, context):
 
 def main():
     # TOKEN CAMILO = 1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0
+    # TOKEN HENRY = 1600741375:AAGjGuD_jOvTQvw7qbqFcGF9zuQTM3OztA8
     # Establecemos una conexión entre nuestro programa y el bot.
-    updater = Updater("TOKEN", use_context=True)  # Insertemos el Token del bot.
+    updater = Updater("1600741375:AAGjGuD_jOvTQvw7qbqFcGF9zuQTM3OztA8", use_context=True)  # Insertemos el Token del bot.
     dp = updater.dispatcher
     
     # Establecer los comandos que ejecutará el bot.
