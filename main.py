@@ -37,9 +37,9 @@ def main():
             CallbackQueryHandler(callback = rr.input_callback_secuencia, pattern="rr")
         ],
         states = {
-            rr.INPUT_LISTA: [MessageHandler(Filters.text, rr.input_polinomio)],
-            rr.INPUT_CI: [MessageHandler(Filters.text, rr.input_ci)],
-            rr.INPUT_I: [MessageHandler(Filters.regex(r'^\d+$'), rr.input_i0)],
+            rr.INPUT_LISTA: [MessageHandler(Filters.text& ~Filters.command, rr.input_polinomio)],
+            rr.INPUT_CI: [MessageHandler(Filters.text& ~Filters.command, rr.input_ci)],
+            rr.INPUT_I: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, rr.input_i0)],
         },
         fallbacks = [CommandHandler("cancel",cancel)],
     ))
@@ -50,9 +50,9 @@ def main():
             CallbackQueryHandler(callback = graph.input_callback_grafo, pattern="grafo")
         ],
         states = {
-            graph.INPUT_VERTICES: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_vertices)],
-            graph.INPUT_ARISTAS: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_aristas)],
-            graph.INPUT_K: [MessageHandler(Filters.regex(r'^\d+$'), graph.input_k)],
+            graph.INPUT_VERTICES: [MessageHandler(Filters.regex(r'^\d+$') & ~Filters.command, graph.input_vertices)],
+            graph.INPUT_ARISTAS: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, graph.input_aristas)],
+            graph.INPUT_K: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, graph.input_k)],
         },
         fallbacks = [CommandHandler("cancel",cancel)],
     ))
