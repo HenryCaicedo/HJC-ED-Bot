@@ -27,7 +27,7 @@ def main():
             CallbackQueryHandler(callback = fibonacci.input_callback_fibonacci, pattern="fib")
         ],
         states = {
-            fibonacci.INPUT_FIB: [MessageHandler(Filters.text, fibonacci.input_serie)],
+            fibonacci.INPUT_FIB: [MessageHandler(Filters.text & ~Filters.command, fibonacci.input_serie)],
         },
         fallbacks = [CommandHandler("cancel",cancel)],
     ))
