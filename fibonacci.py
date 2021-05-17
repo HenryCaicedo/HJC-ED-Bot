@@ -8,11 +8,9 @@ def input_command_fibonacci(update, context):
     update.message.reply_text(f"Digite la serie de números, separados por espacios:")
     return INPUT_FIB
 
-
 def input_callback_fibonacci(update, context):
     update.callback_query.message.edit_text("Digite la serie de números, separados por espacios:")
     return INPUT_FIB
-
 
 def input_serie(update, context):
     try:
@@ -37,13 +35,13 @@ def escogerSecuencia(lista):
     return largestLista
 
 def encontrar_fib(lista):
+    global posiblesListas
+    posiblesListas=[]
     for index in range(0, len(lista)-2):
-        global posiblesListas
         temp = secuencia(index)
         posiblesListas = posiblesListas + temp
     resultado = escogerSecuencia(posiblesListas)
     return resultado
-
 
 def ya_esta_en_la_lista(temp):
     s2 = len(temp)

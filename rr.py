@@ -11,14 +11,14 @@ i0 = 0
 
 def validar_poli(update, context):
     update.message.reply_text(
-        f"¡La entrada no es valida!, Comenzemos denuevo.")
+        f"¡La entrada no es valida!, Comencemos denuevo.")
     update.message.reply_text(
         f"Digite los coeficientes del polinomio caracteristico en forma de lista: ")
     return INPUT_LISTA
 
 def validar_ci(update, context):
     update.message.reply_text(
-        f"¡La entrada no es valida!, Comenzemos denuevo.")
+        f"¡La entrada no es valida!, Comencemos denuevo.")
     update.message.reply_text(
                 f"Digite los casos base en forma de lista: ")
     return INPUT_CI
@@ -53,7 +53,6 @@ def input_ci(update, context):
     except:
         validar_ci(update, context)
 
-
 def input_polinomio(update, context):
     global lista
     try:
@@ -76,18 +75,15 @@ def input_polinomio(update, context):
     except Exception as e:
         validar_poli(update, context)
 
-
 def input_command_secuencia(update, context):
     update.message.reply_text(
         f"Digite los coeficientes del polinomio caracteristico en forma de lista: ")
     return INPUT_LISTA
 
-
 def input_callback_secuencia(update, context):
     update.callback_query.message.edit_text(
         "Digite los coeficientes del polinomio caracteristico en forma de lista: ")
     return INPUT_LISTA
-
 
 def solucionar_rr(rr, ci, i0):
     R = np.roots(rr)
