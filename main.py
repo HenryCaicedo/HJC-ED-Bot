@@ -19,7 +19,7 @@ def main():
     dp.add_handler(CommandHandler("start", help.start))
     dp.add_handler(CommandHandler("ayuda", help.help))
     dp.add_handler(CommandHandler("menu", help.menu))
-    dp.CallbackQueryHandler(callback = help.help, pattern="help")
+    dp.add_handler(CallbackQueryHandler(callback = help.help, pattern="help"))
 
     dp.add_handler(ConversationHandler(
         entry_points=[

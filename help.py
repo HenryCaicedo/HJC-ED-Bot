@@ -14,8 +14,7 @@ def start(update, context):
 
 
 def help(update, context):
-    name = update.message.chat["first_name"]
-    text = f"Hola, {name}. Este bot posee tres funciones: "
+    text = f"Hola, este bot posee tres funciones: "
     rr = f"1. /rr, Recibe los coeficientes de un polinomio característico de una relación de recurrencia y muestra cuál sería la forma de la solución."
     examplerr = f"Ej: f(n) = -1/2*f(n-1) + 1/2*f(n-2) con f_0 = 3 y f_1 = -3/2\nEs digitado como:\n[1,0.5,-0.5]\nCasos base:\n[3,-1.5]\nEl i sería:\n0"
     fib = f"2. /fib, Busca una subsecuencia que pueda considerarse como una sucesión de Fibonacci, a partir de una secuencia ingresada por el usuario.\nLa secuencia ingresada debe consistir de números enteros ordenados de menor a mayor y separados por espacios."
@@ -23,14 +22,25 @@ def help(update, context):
     grafo = f"3. /grafo, Crea un grafo simple no dirigido con V vértices, y E aristas asignadas aleatoriamente, de tal modo que ningún vértice tenga un grado mayor a K.\nSe deben digitar 3 números: El número de vértices 'V', número de aristas 'E' y el máximo número de aristas por vértice 'K'. "
     menut = f"4. /menu, Permite ejecutar las funciones anteriores a través de un menú interactivo."
     cancel = f"5. /cancel, Detiene el proceso que se esté realizando."
-    update.message.reply_text(text)
-    update.message.reply_text(rr)
-    update.message.reply_text(examplerr)
-    update.message.reply_text(fib)
-    update.message.reply_text(examplefib)
-    update.message.reply_text(grafo)
-    update.message.reply_text(menut)
-    update.message.reply_text(cancel)
+    try:     
+        update.message.reply_text(text)
+        update.message.reply_text(rr)
+        update.message.reply_text(examplerr)
+        update.message.reply_text(fib)
+        update.message.reply_text(examplefib)
+        update.message.reply_text(grafo)
+        update.message.reply_text(menut)
+        update.message.reply_text(cancel)
+    except:
+        update.callback_query.message.edit_text(text)        
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,text = rr)
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,text = examplerr)
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,text = fib)
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,text = examplefib)
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,text = grafo)
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,text = menut)
+        context.bot.send_message(chat_id=update.callback_query.from_user.id,text = cancel)
+   
 
 
 def menu(update, context):
