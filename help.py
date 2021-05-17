@@ -38,7 +38,7 @@ def menu(update, context):
     opciones = [[InlineKeyboardButton("Relación de recurrencia", callback_data="rr")],
                 [InlineKeyboardButton("Fibonacci", callback_data="fib")],
                 [InlineKeyboardButton("Generar grafo", callback_data="grafo")]
-                ,[InlineKeyboardButton("Ayuda", callback_data="help.help")]]
+                ,[InlineKeyboardButton("Ayuda", callback_data="help")]]
     reply_markup = InlineKeyboardMarkup(opciones)
     text = f"Hola {name}, estos las funciones que puedo ejecutar:"
     update.message.reply_text(text, reply_markup=reply_markup)
