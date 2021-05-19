@@ -17,7 +17,7 @@ def input_aristas(update, context):
     global aristas
     aristas = int(update.message.text)
     update.message.reply_text(
-        f"Digite k (Resticción de aristas por vertice): ")
+        f"Digite k (Restricción de aristas por vértice): ")
     return INPUT_K
 
 
@@ -26,8 +26,8 @@ def input_k(update, context):
     k = int(update.message.text)
 
     if aristas > (vertices/2)*k or aristas > (vertices/2)*(vertices-1):
-        update.message.reply_text(f"El número de vertices no es valido. Comencemos de nuevo.")
-        update.message.reply_text(f"Digite el número de vertices: ")
+        update.message.reply_text(f"El número de vértices no es valido. Comencemos de nuevo.")
+        update.message.reply_text(f"Digite el número de vértices: ")
         return INPUT_VERTICES
     else:
         dibujar_grafo(vertices, aristas, k)
@@ -46,12 +46,12 @@ def input_vertices(update, context):
 
 
 def input_command_grafo(update, context):
-    update.message.reply_text(f"Digite el número de vertices: ")
+    update.message.reply_text(f"Digite el número de vértices: ")
     return INPUT_VERTICES
 
 
 def input_callback_grafo(update, context):
-    update.callback_query.message.edit_text("Digite el número de vertices:")
+    update.callback_query.message.edit_text("Digite el número de vértices:")
     return INPUT_VERTICES
 
 
@@ -75,7 +75,9 @@ def dibujar_grafo( vertices, aristas, k):
                 print(A)
                 break
 
+
     print(edges)
     G.add_edges_from(edges)
-    nx.draw(G, with_labels=True, font_weight='bold')
+
+    nx.draw(G, node_color='blue' , with_labels=True, font_color='white', font_weight='bold')
     plt.savefig('grafo.png')
