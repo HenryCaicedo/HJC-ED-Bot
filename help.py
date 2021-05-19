@@ -10,7 +10,7 @@ def start(update, context):
     logger.info("Se ha iniciado el bot.")
     name = update.message.chat["first_name"]
     update.message.reply_text(
-        f"¡Hola, {name} \U0001F44B!, un gusto tenerte por acá.\nDigita /ayuda para obtener ayuda sobre el uso del bot.")
+        f"¡Hola, {name} \U0001F44B!. Bienvenid@ a HJC Bot.\nDigita /ayuda para ver información acerca del funcionamiento del bot.")
 
 
 def help(update, context):
