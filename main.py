@@ -1,4 +1,4 @@
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, ConversationHandler, MessageHandler, Filters, callbackcontext
 import help
 import graph
 import rr
@@ -8,11 +8,16 @@ def cancel(update, context):
     update.message.reply_text(f"El proceso se ha detenido")
     return ConversationHandler.END
 
+def stop_start(update,context):
+    update.message.reply_text(f"Error, si quiere iniciar un nuevo comando use /cancel primero.")
+    cancel(update,context)
+    return ConversationHandler.END
+
 def main():
     # TOKEN CAMILO = 1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0
     # TOKEN HENRY = 1600741375:AAGjGuD_jOvTQvw7qbqFcGF9zuQTM3OztA8
     # Establecemos una conexión entre nuestro programa y el bot.
-    updater = Updater("1600741375:AAGjGuD_jOvTQvw7qbqFcGF9zuQTM3OztA8", use_context=True)  # Insertemos el Token del bot.
+    updater = Updater("1664245450:AAEh6R8xK_iSJ58-TQzI144h_xvQZyRMNY0", use_context=True)  # Insertemos el Token del bot.
     dp = updater.dispatcher
     
     # Establecer los comandos que ejecutará el bot.
@@ -29,7 +34,7 @@ def main():
         states = {
             fibonacci.INPUT_FIB: [MessageHandler(Filters.text & ~Filters.command, fibonacci.input_serie)],
         },
-        fallbacks = [CommandHandler("cancel",cancel)],
+        fallbacks = [CommandHandler("cancel",cancel),MessageHandler(Filters.command,stop_start)],
     ))
 
     dp.add_handler(ConversationHandler(
@@ -42,7 +47,7 @@ def main():
             rr.INPUT_CI: [MessageHandler(Filters.text& ~Filters.command, rr.input_ci)],
             rr.INPUT_I: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, rr.input_i0)],
         },
-        fallbacks = [CommandHandler("cancel",cancel)],
+        fallbacks = [CommandHandler("cancel",cancel),MessageHandler(Filters.command,stop_start)],
     ))
 
     dp.add_handler(ConversationHandler(
@@ -55,7 +60,7 @@ def main():
             graph.INPUT_ARISTAS: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, graph.input_aristas)],
             graph.INPUT_K: [MessageHandler(Filters.regex(r'^\d+$')& ~Filters.command, graph.input_k)],
         },
-        fallbacks = [CommandHandler("cancel",cancel)],
+        fallbacks = [CommandHandler("cancel",cancel), MessageHandler(Filters.command,stop_start)],
     ))
 
     
