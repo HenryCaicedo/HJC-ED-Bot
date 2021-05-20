@@ -13,10 +13,15 @@ def input_callback_fibonacci(update, context):
     return INPUT_FIB
 
 def input_serie(update, context):
+
     try:
         global lista
         serie = update.message.text
         lista = list(map(int, serie.strip().split()))[:len(serie.strip().split())]
+
+        if(listaOrdenada(lista)==False):
+            raise ValueError('La lista no está ordenada')
+
         resultado = encontrar_fib(lista)
         if len(resultado)<3:
             update.message.reply_text('No se encontraron subsecuencias de Fibonacci en la secuencia ingresada.')
@@ -26,6 +31,13 @@ def input_serie(update, context):
     except (IndexError, ValueError):
         update.message.reply_text('Se produjo un error al leer los datos. Recuerda ingresar números enteros ordenados de menor a mayor y separados por espacios.\n\nEj: 2 3 4 5 7 11 13 18 22 29')
         update.message.reply_text('Intententemos de nuevo.\nDigite la serie de números, separados por espacios:')
+
+def listaOrdenada(lista):
+    aux = lista[:]
+    aux.sort()
+    if(lista == aux):
+        return True
+    return False
 
 def escogerSecuencia(lista):
     largestLista = []
