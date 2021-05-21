@@ -13,7 +13,6 @@ def input_callback_fibonacci(update, context):
     return INPUT_FIB
 
 def input_serie(update, context):
-
     try:
         global lista
         serie = update.message.text

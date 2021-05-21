@@ -4,12 +4,13 @@ import graph
 import rr
 import fibonacci
 
+# Función para cancelar la ejecución de un proceso
 def cancel(update, context):
     update.message.reply_text(f"El proceso se ha detenido")
     return ConversationHandler.END
 
 def stop_start(update,context):
-    update.message.reply_text(f"Error, si quiere iniciar un nuevo comando use /cancel primero.")
+    update.message.reply_text(f"Se produjo un error. Si quiere iniciar un nuevo comando use /cancel primero.")
     cancel(update,context)
     return ConversationHandler.END
 
@@ -26,6 +27,7 @@ def main():
     dp.add_handler(CommandHandler("menu", help.menu))
     dp.add_handler(CallbackQueryHandler(callback = help.help, pattern="help"))
 
+    # Comando Fib
     dp.add_handler(ConversationHandler(
         entry_points=[
             CommandHandler("fib", fibonacci.input_command_fibonacci),
@@ -37,6 +39,7 @@ def main():
         fallbacks = [CommandHandler("cancel",cancel),MessageHandler(Filters.command,stop_start)],
     ))
 
+    # Comando RR
     dp.add_handler(ConversationHandler(
         entry_points=[
             CommandHandler("rr",rr.input_command_secuencia),
@@ -50,6 +53,7 @@ def main():
         fallbacks = [CommandHandler("cancel",cancel),MessageHandler(Filters.command,stop_start)],
     ))
 
+    # Comando Grafo
     dp.add_handler(ConversationHandler(
         entry_points=[
             CommandHandler("grafo", graph.input_command_grafo),
