@@ -12,7 +12,7 @@ vertices = 0
 aristas = 0
 k = 0
 
-
+# Lee el número máximo de aristas por vértices
 def input_aristas(update, context):
     global aristas
     aristas = int(update.message.text)
@@ -20,7 +20,7 @@ def input_aristas(update, context):
         f"Digite k (Restricción de aristas por vértice): ")
     return INPUT_K
 
-
+# Valida entradas y posteriormente llama a las funciones que generarán el grafo
 def input_k(update, context):
     global k
     k = int(update.message.text)
@@ -37,14 +37,14 @@ def input_k(update, context):
         os.unlink(filename)
         return ConversationHandler.END
 
-
+# Lee el número de aristas
 def input_vertices(update, context):
     global vertices
     vertices = int(update.message.text)
     update.message.reply_text(f"Digite el número de aristas: ")
     return INPUT_ARISTAS
 
-
+# Lee el número de vértices
 def input_command_grafo(update, context):
     update.message.reply_text(f"Digite el número de vértices: ")
     return INPUT_VERTICES
@@ -55,6 +55,7 @@ def input_callback_grafo(update, context):
     return INPUT_VERTICES
 
 
+# Genera el grafo
 def dibujar_grafo( vertices, aristas, k):
     G = nx.Graph()
     A = []
@@ -75,9 +76,9 @@ def dibujar_grafo( vertices, aristas, k):
                 print(A)
                 break
 
-
     print(edges)
     G.add_edges_from(edges)
 
+    # Genera la imagen del grafo para posteriormente ser enviada al usuario
     nx.draw(G, node_color='blue' , with_labels=True, font_color='white', font_weight='bold')
     plt.savefig('grafo.png')

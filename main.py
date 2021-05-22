@@ -67,10 +67,8 @@ def main():
         fallbacks = [CommandHandler("cancel",cancel), MessageHandler(Filters.command,stop_start)],
     ))
 
-    
-    
 
-    # Iniciamos el bot.
+    # Se inicia el bot.
     updater.start_polling()
     # Mantener al bot ejecutándose hasta que ocurra una interrupción.
     updater.idle()

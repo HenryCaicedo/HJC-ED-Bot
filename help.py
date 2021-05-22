@@ -6,6 +6,7 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger(__name__)
 
 
+# Función de iniciar el bot
 def start(update, context):
     logger.info("Se ha iniciado el bot.")
     name = update.message.chat["first_name"]
@@ -13,6 +14,7 @@ def start(update, context):
         f"¡Hola, {name} \U0001F44B!. Bienvenid@ a HJC Bot.\nDigita /ayuda para ver información acerca del funcionamiento del bot.")
 
 
+# Función de ayuda
 def help(update, context):
     text = f"Hola, este bot posee tres funciones: "
     rr = f"1. /rr, Recibe los coeficientes de un polinomio característico de una relación de recurrencia y muestra cuál sería la forma de la solución."
@@ -43,6 +45,7 @@ def help(update, context):
    
 
 
+# Mostrar menú interactivo
 def menu(update, context):
     name = update.message.chat["first_name"]
     opciones = [[InlineKeyboardButton("Relación de recurrencia", callback_data="rr")],

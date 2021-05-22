@@ -1,7 +1,6 @@
 import numpy as np
 from telegram.ext.conversationhandler import ConversationHandler
 
-
 INPUT_LISTA, INPUT_CI, INPUT_I = range(3)
 
 lista = []
@@ -85,6 +84,7 @@ def input_callback_secuencia(update, context):
         "Digite los coeficientes del polinomio caracteristico en forma de lista: ")
     return INPUT_LISTA
 
+# Soluciona la relación de recurrencia
 def solucionar_rr(rr, ci, i0):
     R = np.roots(rr)
     l = len(ci)
@@ -102,5 +102,4 @@ def solucionar_rr(rr, ci, i0):
             sol = sol+" + "+str(round(b[i], 5))+"*"+str(R[i])+"^n"
         else:
             sol = sol+str(round(b[i], 5))+"*"+str(R[i])+"^n"
-
     return sol
