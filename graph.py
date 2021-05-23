@@ -57,6 +57,7 @@ def input_callback_grafo(update, context):
 
 # Genera el grafo
 def dibujar_grafo( vertices, aristas, k):
+    plt.clf()
     G = nx.Graph()
     A = []
     edges = []
@@ -82,3 +83,4 @@ def dibujar_grafo( vertices, aristas, k):
     # Genera la imagen del grafo para posteriormente ser enviada al usuario
     nx.draw(G, node_color='blue' , with_labels=True, font_color='white', font_weight='bold')
     plt.savefig('grafo.png')
+    
